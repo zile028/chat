@@ -10,7 +10,8 @@
     <article class="d-flex justify-content-center align-items-center flex-column vh-100">
         <form action="register.php" class="col-md-4" method="post" enctype="multipart/form-data">
             <div class="mb-3">
-                <input type="file" name="profil_img">
+                <img id="profil" src="" alt="">
+                <input id="file_img" type="file" name="profil_img">
                 <input class="form-control mb-3 text-center" type="text" placeholder="First name" name="first_name"
                     value="<?php echo empty($first_name) ? "": $first_name; ?>">
                 <input class="form-control mb-3 text-center" type="text" placeholder="Last name" name="last_name"
@@ -25,7 +26,7 @@
             <div class=" mb-3 ">
                 <button class="form-control btn-primary" type="submit">Register</button>
             </div>
-            <?php if(count($error)>0): ?>
+            <?php if(isset($error) && count($error)>0): ?>
             <ul>
                 <?php foreach($error as $err): ?>
                 <li><?php echo $err; ?></li>
@@ -36,5 +37,6 @@
     </article>
 </section>
 
+<script src="main.js"></script>
 
 <?php require ROOT . "/partials/bottom.php"; ?>
