@@ -2,6 +2,7 @@
 
 require "core/init.php";
 
+
 if ("POST" == $_SERVER["REQUEST_METHOD"]) {
     $users = new Users();
     $error = [];
@@ -35,11 +36,24 @@ if ("POST" == $_SERVER["REQUEST_METHOD"]) {
     }
 
     if (count($error) == 0) {
+        if(!file_exists(UPLOAD_PATH)){
+            mkdir(UPLOAD_PATH);
+        };
+        $file_info=singleFileInfo($_FILES["profil_img"]);
+        $check_file= checkFile($file_info,["jpeg","jpg","png"],1,false);
+        if(count($check_file["errors"])==0){
+            $upload_info=move_uploaded_file($check_file["temp_name"], UPLOAD_PATH ."/" . $check_file["store_name"]);
+            dd($upload_info);        
+        }
+
+        
+
         if ($users->addUser($first_name, $last_name, $email, $password)){
             echo "User is succefuly added!";
         }else{
             echo "User is not added!";
         };
+        
     }
 
 }

@@ -1,5 +1,5 @@
 let profil = document.getElementById("profil");
-let fileImg = document.getElementById("file_img");
+let fileImg = document.getElementById("file-img");
 
 fileImg.addEventListener("change", showPicture);
 

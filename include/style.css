@@ -1,0 +1,13 @@
+input[type="file"] {
+  display: none;
+}
+
+.profil-img {
+  border: 1px solid transparent;
+  box-shadow: 0 5px 10px rgba(221, 221, 221, 0.7);
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+/*# sourceMappingURL=style.css.map */
