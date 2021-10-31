@@ -30,6 +30,20 @@ function logIn($email, $password)
 
 }
 
+function getPassword($email){
+    $db = new Db();
+    $sql = "SELECT * FROM users WHERE email = ?";
+    $qry = $db->db->prepare($sql);
+    $qry->bind_param("s", $email);
+    $qry->execute();
+    $result = $qry->get_result();
+    if($qry->errno==0 && $result->num_rows==1){
+        return $result->fetch_assoc()["password"];
+    }else{
+        return false;
+    }
+}
+
 function isLoged()
 {
     if (isset($_SESSION["id"])) {
@@ -49,7 +63,7 @@ function singleFileInfo($files)
         "size"       => $files['size'],
         "doc_name"   => strtolower($files['name']),
         "doc_ext"    => pathinfo(strtolower($files['name']), PATHINFO_EXTENSION),
-        "input_name" => $_POST['file_name'],
+        "input_name" => isset($_POST['file_name']) ? $_POST['file_name']: "",
         "store_name" => rand(100, 999) . time() . "." . pathinfo(strtolower($files['name']), PATHINFO_EXTENSION),
     ]);
 

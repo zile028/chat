@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8888
--- Generation Time: Oct 27, 2021 at 11:20 PM
+-- Generation Time: Oct 31, 2021 at 10:46 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -21,6 +21,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `chat`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(15) NOT NULL,
+  `sender_id` int(15) NOT NULL,
+  `recipient_id` int(15) NOT NULL,
+  `subject` varchar(160) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `urgently` int(1) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_read` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `sender_id`, `recipient_id`, `subject`, `message`, `urgently`, `time`, `is_read`) VALUES
+(4, 2, 6, 'Predmet', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient.', 0, '2021-10-30 22:43:52', 0),
+(5, 2, 7, 'Predmet', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient.', 1, '2021-10-30 22:44:12', 0);
 
 -- --------------------------------------------------------
 
@@ -65,11 +90,23 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `profil_img`, `register_at`, `last_login`, `role_id`) VALUES
-(1, 'Dejan', 'Živković', 'zile028@gmail.com', '$2y$10$FFZS9xIX/MQIf.4SrG7oPuDsy16EkHlDTqkZ73dcZzLz4qi3wruUW', NULL, '2021-10-27 22:14:11', '2021-10-27 22:14:11', NULL);
+(2, 'Дејан', 'Живковић', 'zile028@gmail.com', '$2y$10$QwRFHEn9dJpjHA.FIuC4TuVT01Kvwe6Ht7NlOSX2c11V0SGzUh1NK', '8871635536081.jpg', '2021-10-29 19:34:41', '2021-10-31 10:58:47', 1),
+(6, 'Nebojsa', 'Vasic', 'zdejan028@gmail.com', '$2y$10$o2vNqZIGi1h4HicYL3158usr9d/35pw8ugyCv1CW5C7As7fOOvXDa', '1691635580538.jpg', '2021-10-30 07:55:38', '2021-10-31 07:48:09', NULL),
+(7, 'Предраг', 'Петровић', 'zile123@gmail.com', '$2y$10$TOuAuM1Q7.TTGEVvGlnd/uNXJ9ocLgysxEWlXC10caM.0l4AXiFMu', '1901635625622.jpg', '2021-10-30 20:27:02', '2021-10-30 20:27:02', NULL);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sender_id` (`sender_id`),
+  ADD KEY `recipient_id` (`recipient_id`),
+  ADD KEY `sender_id_2` (`sender_id`),
+  ADD KEY `recipient_id_2` (`recipient_id`);
 
 --
 -- Indexes for table `role`
@@ -89,6 +126,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
@@ -98,11 +141,17 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `users`

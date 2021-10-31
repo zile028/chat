@@ -2,11 +2,11 @@
 
 require "core/init.php";
 
-
+$error = [];
 if ("POST" == $_SERVER["REQUEST_METHOD"]) {
-    $users = new Users();
-    $error = [];
+    $Users = new Users();
 
+    // validation data
     if (!isset($_POST['first_name']) || empty($_POST['first_name'])) {
         $error["first_name"] = "First name is required!";
     } else {
@@ -36,24 +36,34 @@ if ("POST" == $_SERVER["REQUEST_METHOD"]) {
     }
 
     if (count($error) == 0) {
-        if(!file_exists(UPLOAD_PATH)){
-            mkdir(UPLOAD_PATH);
-        };
-        $file_info=singleFileInfo($_FILES["profil_img"]);
-        $check_file= checkFile($file_info,["jpeg","jpg","png"],1,false);
-        if(count($check_file["errors"])==0){
-            $upload_info=move_uploaded_file($check_file["temp_name"], UPLOAD_PATH ."/" . $check_file["store_name"]);
-            dd($upload_info);        
+        // check exist user email
+
+
+        if ($Users->checkUserEmail($email)) {
+            $error["err_msg"] = "User with this email already exists.";
+        } else {
+
+        // check exist folder
+            if (!file_exists(UPLOAD_PATH)) {
+                mkdir(UPLOAD_PATH);
+            }
+
+            $file_info  = singleFileInfo($_FILES["profil_img"]);
+            $check_file = checkFile($file_info, ["jpeg", "jpg", "png"], 1, false);
+
+            if (count($check_file["errors"]) == 0) {
+                $upload_info = move_uploaded_file($check_file["info"]["temp_name"], UPLOAD_PATH . "/" . $check_file["info"]["store_name"]);
+            }
+
+            if ($upload_info) {
+                if ($Users->addUser($first_name, $last_name, $email, $password, $check_file["info"]["store_name"])) {
+                    header("location: " . URL_ROOT . "/index.php");
+                } else {
+                    echo "User is not added!";
+                }
+            }
         }
 
-        
-
-        if ($users->addUser($first_name, $last_name, $email, $password)){
-            echo "User is succefuly added!";
-        }else{
-            echo "User is not added!";
-        };
-        
     }
 
 }

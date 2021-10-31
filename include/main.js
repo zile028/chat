@@ -1,7 +1,9 @@
 let profil = document.getElementById("profil");
 let fileImg = document.getElementById("file-img");
 
-fileImg.addEventListener("change", showPicture);
+if (fileImg) {
+  fileImg.addEventListener("change", showPicture);
+}
 
 function showPicture() {
   let file = this.files[0];
@@ -19,4 +21,34 @@ function showPicture() {
       profil.setAttribute("src", "");
     }
   };
+}
+
+// trash button
+let trashBtn = document.querySelectorAll(".trash-btn");
+
+trashBtn.forEach((btn) => {
+  btn.addEventListener("click", httpRequest);
+});
+
+function httpRequest() {
+  let xml = new XMLHttpRequest();
+  let url = "http://localhost:8888/chat/delete_message.php";
+  let el = this;
+  let data = "id=" + this.getAttribute("data-msgid");
+
+  xml.open("POST", url, true);
+  xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xml.onreadystatechange = function () {
+    if (xml.readyState === 4 && xml.status === 200) {
+      console.log(xml.response);
+      trash(el);
+    }
+  };
+
+  xml.send(data);
+}
+
+function trash(el) {
+  let msgWraper = el.closest(".card");
+  msgWraper.remove();
 }

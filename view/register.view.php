@@ -6,9 +6,8 @@
     <article class="d-flex justify-content-center align-items-center flex-column vh-100">
         <form action="register.php" class="col-md-4" method="post" enctype="multipart/form-data">
             <div class="mb-3">
-
                 <div class="profil col-6 offset-3 text-center">
-                    <img class="profil-img mb-2" id="profil" src="" alt="">
+                    <label for="file-img"><img class="profil-img mx-auto" id="profil" src="" alt=""></label>
                     <label class="btn btn-primary" for="file-img">Choose image</label>
                     <input id="file-img" type="file" name="profil_img">
                 </div>
@@ -29,10 +28,11 @@
             <?php if(isset($error) && count($error)>0): ?>
             <ul>
                 <?php foreach($error as $err): ?>
-                <li><?php echo $err; ?></li>
+                <li class="error-msg text-center"><?php echo $err; ?></li>
                 <?php endforeach; ?>
             </ul>
             <?php endif; ?>
+
         </form>
     </article>
 </section>

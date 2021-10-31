@@ -5,7 +5,7 @@ require "core/init.php";
 if(isLoged()){
     header("location: index.php");
 }
-
+$err_login=null;
 if ("POST" == $_SERVER["REQUEST_METHOD"]) {
 
     $users = new Users();
@@ -25,7 +25,9 @@ if ("POST" == $_SERVER["REQUEST_METHOD"]) {
 
     if (count($error) == 0) {
         if(logIn($email, $password)){
-            header("location: index.php");
+            header("location: " . URL_ROOT . "/index.php");
+        }else{
+            $err_login="Wrong email or password!";
         };
     }
 

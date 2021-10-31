@@ -9,7 +9,7 @@
                 <input class="form-control text-center" type="password" placeholder="Password" name="password">
             </div>
             <div class="col-md-6 offset-md-3  text-center">
-                <a class="btn btn-warning mb-3" href="change_password">Change password</a>
+                <a class="btn btn-warning mb-3" href="change_password.php">Change password</a>
                 <a class="btn btn-warning mb-3" href="register.php">Register</a>
             </div>
             <div class="col-md-6 offset-md-3 mb-3 ">
@@ -23,6 +23,9 @@
             </ul>
             <?php endif; ?>
 
+            <?php if($err_login != null): ?>
+            <p class="error-msg text-center"><?php echo $err_login; ?></p>
+            <?php endif; ?>
         </form>
     </article>
 </section>

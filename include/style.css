@@ -2,12 +2,51 @@ input[type="file"] {
   display: none;
 }
 
+textarea {
+  overflow: auto;
+  resize: none;
+}
+
+.error-msg {
+  color: #ff0000;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.profil-image {
+  min-width: 200px;
+}
+
 .profil-img {
-  border: 1px solid transparent;
+  display: block;
+  border: 5px solid #ddd;
   box-shadow: 0 5px 10px rgba(221, 221, 221, 0.7);
   height: 200px;
   width: 200px;
   object-fit: cover;
   border-radius: 50%;
+}
+
+.profil-info {
+  flex-grow: 1;
+}
+
+.messages article img {
+  height: 70px;
+  width: 70px;
+  object-fit: cover;
+  display: block;
+  border-radius: 50%;
+}
+
+.card-header {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header div:nth-child(2) {
+  text-align: left;
+  flex: 1;
+  padding: 0 10px;
 }
 /*# sourceMappingURL=style.css.map */
