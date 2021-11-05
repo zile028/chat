@@ -18,11 +18,13 @@
                 <li><a class="btn btn-primary mt-3 w-100 d-flex justify-content-between align-items-center"
                         href="edit_profil.php">Edit profil</a></li>
                 <li><a class="btn btn-primary mt-3 w-100 d-flex justify-content-between align-items-center"
-                        href="index.php?dir=inbox">Inbox<span
-                            class="badge badge-light"><?php echo $number_msg["inbox"]; ?></span></a></li>
+                        href="index.php">New message</a></li>
                 <li><a class="btn btn-primary mt-3 w-100 d-flex justify-content-between align-items-center"
-                        href="index.php?dir=sent">Sent messages<span
-                            class="badge badge-light"><?php echo $number_msg["sent"]; ?></span></a></li>
+                        href="index.php?dir=inbox">Inbox<span class="badge badge-light"
+                            data-mailbox="inbox"><?php echo $number_msg["inbox"]; ?></span></a></li>
+                <li><a class="btn btn-primary mt-3 w-100 d-flex justify-content-between align-items-center"
+                        href="index.php?dir=sent">Sent messages<span class="badge badge-light"
+                            data-mailbox="sent"><?php echo $number_msg["sent"]; ?></span></a></li>
             </ul>
         </article>
         <article class="col-md-9">
@@ -101,6 +103,7 @@
             <?php elseif (isset($_GET["dir"]) && "sent" == $_GET["dir"]): ?>
             <h2 class="text-center">SENT MESSAGE</h2>
             <?php endif; ?>
+
             <?php if (isset($allMessages)): foreach ($allMessages as $msg): ?>
 
             <div class="card mb-3">
@@ -110,6 +113,7 @@
                         <h4><?php echo "{$msg["first_name"]} {$msg["last_name"]}"; ?></h4>
                         <h5><?php echo $msg["subject"]; ?></h5>
                     </div>
+
                     <div class="text-right">
                         <p><?php echo date("d. m. Y. H:i", strtotime($msg["time"])); ?></p>
                         <?php if ($msg["is_read"]): ?>
@@ -117,9 +121,8 @@
                         <?php else: ?>
                         <button class="btn-sm btn-dark" type="button"><i class="fas fa-envelope-open-text"></i></button>
                         <?php endif; ?>
-
-                        <button class="trash-btn btn-sm btn-dark" type="button" data-msgid=<?php echo $msg["id"]; ?>><i
-                                class="fas fa-trash"></i></button>
+                        <button class="trash-btn btn-sm btn-dark" type="button"
+                            data-msgid=<?php echo $msg["m_id"]; ?>><i class="fas fa-trash"></i></button>
                     </div>
                 </div>
                 <div class="card-body">

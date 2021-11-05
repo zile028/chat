@@ -44,10 +44,11 @@ if (isLoged()) {
 
             $Message->sendMessage($_SESSION['id'], $subject, $text_message, $recipient, $urgent);
 
-            header("location: index.php");
+            header("location: index.php?dir=sent");
         }
     }elseif(isset($_GET["dir"])){
         $allMessages = $Message->getAll($_SESSION['id'],$_GET["dir"]);
+
     }
 
     require "view/index.view.php";

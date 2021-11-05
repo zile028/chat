@@ -107,7 +107,9 @@ class Messages extends Db
     public function getAll($user_id, $type)
     {
 
-        $sql = "SELECT m.*, u.*
+        $sql = "SELECT m.*, u.*,
+                    m.id m_id,
+                    u.id u_id
                 FROM messages m
                 JOIN users u
                 ON u.id = m.recipient_id ";
@@ -145,7 +147,7 @@ class Messages extends Db
 
         $result = [
             "inbox" => $res_inbox->num_rows,
-            "sent" => $res_sent->num_rows
+            "sent"  => $res_sent->num_rows,
         ];
 
         if (0 == $qry->errno) {
@@ -155,10 +157,11 @@ class Messages extends Db
         }
     }
 
-    function delete($id){
+    public function delete($id)
+    {
         $sql = "DELETE FROM messages WHERE id = ?";
-        $qry = $this -> db -> prepare($sql);
-        $qry->bind_param("i",$id);
+        $qry = $this->db->prepare($sql);
+        $qry->bind_param("i", $id);
         $qry->execute();
         if (0 == $qry->errno) {
             return true;

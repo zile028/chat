@@ -35,20 +35,23 @@ function httpRequest() {
   let url = "http://localhost:8888/chat/delete_message.php";
   let el = this;
   let data = "id=" + this.getAttribute("data-msgid");
-
-  xml.open("POST", url, true);
+  xml.open("POST", url);
   xml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xml.onreadystatechange = function () {
     if (xml.readyState === 4 && xml.status === 200) {
-      console.log(xml.response);
-      trash(el);
+      result = JSON.parse(xml.response);
+      trash(el, result);
     }
   };
 
   xml.send(data);
 }
 
-function trash(el) {
+function trash(el, result) {
   let msgWraper = el.closest(".card");
+  let msgBox = document.querySelectorAll("[data-mailbox]");
+  msgBox.forEach((box) => {
+    box.innerHTML = result[box.getAttribute("data-mailbox")];
+  });
   msgWraper.remove();
 }
